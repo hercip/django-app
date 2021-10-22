@@ -1,14 +1,28 @@
-version: '3.7'
+version: '3.8'
 
 services:
+  postgres:
+    image: postgres
+    container_name: ${COMPOSE_PROJECT_NAME}.postgres.dev
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+
   django:
-    container_name: ctb.dev
+    container_name: ${COMPOSE_PROJECT_NAME}.dev
     build:
       context: .
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT}:8000"
     volumes:
       - ./code:/code
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
+      - DB_NAME=${DB_USER}
+      - DB_USER=${DB_PASS}
+      - DB_PASS=${DB_NAME}
       - DEBUG=1
+    depends_on:
+      - postgres

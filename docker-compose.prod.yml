@@ -6,7 +6,7 @@ services:
     build:
       context: .
     volumes:
-      - static_data:/hed/sorage/web
+      - static_data:/app/sorage/web
     environment:
       - SECRET_KEY=B376kh689RkbUdN9RCUasQOJRqB1i2
       - ALLOWED_HOSTS=127.0.0.1,localhost
@@ -16,7 +16,7 @@ services:
     build:
       context: ./proxy
     volumes:
-      - static_data:/hed/sorage/static
+      - static_data:/app/sorage/static
     ports:
       - "80:80"
     depends_on:
