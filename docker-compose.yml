@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  django:
+    container_name: ctb.dev
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./code:/code
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DEBUG=1

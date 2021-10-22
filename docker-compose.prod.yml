@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  django:
+    container_name: cbt
+    build:
+      context: .
+    volumes:
+      - static_data:/hed/sorage/web
+    environment:
+      - SECRET_KEY=B376kh689RkbUdN9RCUasQOJRqB1i2
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+
+  proxy:
+    container_name: nginx
+    build:
+      context: ./proxy
+    volumes:
+      - static_data:/hed/sorage/static
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+
+volumes:
+  static_data:
