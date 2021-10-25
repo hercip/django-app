@@ -36,4 +36,6 @@ RUN \
 COPY ./code /code
 WORKDIR /code
 USER user
-CMD ["entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
+# ENTRYPOINT ["./entrypoint.sh"]
+# CMD ["python", "./manage.py", "runserver", "0.0.0.0:8000"]

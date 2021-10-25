@@ -14,7 +14,11 @@ echo "Running migrate start"
 python manage.py migrate --no-input
 echo "Running migrate done"
 
-# echo "Running command '$*'"
-# exec su -s /bin/zsh -c "$*"
+echo "Running collect static start"
+python manage.py collectstatic --noinput
+echo "Running collect static done"
 
-uwsgi --socket :8000 --master --enable-threads --module app.wsgi
+echo "Running command '$*'"
+exec su -s /bin/sh -c "$*"
+
+# uwsgi --socket :8000 --master --enable-threads --module app.wsgi
